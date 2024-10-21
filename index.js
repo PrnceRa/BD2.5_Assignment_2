@@ -175,12 +175,12 @@ const filterByIndustry = (stocksData, industry) => stocksData.filter(stock => st
 
 const filterByExchange = (stocksData, exchange) => stocksData.filter(stock => stock.exchange.toLowerCase() === exchange.toLowerCase());
 
-const sortByGrowth = (stocksData, growth) => stocksData.sort((stock1, stock2) => {
+const sortByGrowth = (stocksData, growth) => stocksData.sort((stocks1, stocks2) => {
   if(growth === 'high-to-low') return stocks2.growth - stocks1.growth;
   else return stocks1.growth - stocks2.growth;
 })
 
-const sortByPrice = (stocksData, price) => stocksData.sort((stock1, stock2) => {
+const sortByPrice = (stocksData, price) => stocksData.sort((stocks1, stocks2) => {
   if(price === 'high-to-low') return stocks2.price - stocks1.price;
   else return stocks1.price - stocks2.price;
 })
@@ -190,26 +190,26 @@ app.get('/stocks', (req, res) => {
   res.json({ stocks: sortedStocks })
 });
 
-app.get('/stocks/filter/industry/:industry', (req, res) => {
-  const { industry } = req.params;
+app.get('/stocks/filter/industry', (req, res) => {
+  const { industry } = req.query;
   const sortedStocks = filterByIndustry(stocks, industry);
   res.json({ stocks: sortedStocks })
 });
 
-app.get('/stocks/filter/exchange/:exchange', (req, res) => {
-  const { exchange } = req.params;
+app.get('/stocks/filter/exchange', (req, res) => {
+  const { exchange } = req.query;
   const sortedStocks = filterByExchange(stocks, exchange);
   res.json({ stocks: sortedStocks })
 });
 
-app.get('/stocks/sort/growth/:growth', (req, res) => {
-  const { growth } = req.params;
+app.get('/stocks/sort/growth', (req, res) => {
+  const { growth } = req.query;
   const sortedStocks = sortByGrowth(stocks, growth);
   res.json({ stocks: sortedStocks })
 });
 
-app.get('/stocks/sort/pricing/:pricing', (req, res) => {
-  const { pricing } = req.params;
+app.get('/stocks/sort/pricing', (req, res) => {
+  const { pricing } = req.query;
   const sortedStocks = sortByPrice(stocks, +pricing);
   res.json({ stocks: sortedStocks })
 });
