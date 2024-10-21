@@ -210,7 +210,7 @@ app.get('/stocks/sort/growth', (req, res) => {
 
 app.get('/stocks/sort/pricing', (req, res) => {
   const { pricing } = req.query;
-  const sortedStocks = sortByPrice(stocks, +pricing);
+  const sortedStocks = sortByPrice(stocks, pricing);
   res.json({ stocks: sortedStocks })
 });
 
